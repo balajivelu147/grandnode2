@@ -11,7 +11,8 @@ namespace Grand.Api.Controllers
     [ODataRouteComponent]
     [Route("odata/[controller]")]
     [ApiExplorerSettings(IgnoreApi = false)]
-    [AuthorizeApiAdmin]
+    //[AuthorizeApiAdmin]
+    [AllowAnonymous]
     public abstract partial class BaseODataController : ODataController
     {
         public override ForbidResult Forbid()
