@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.OData.Routing.Controllers;
 
 namespace Grand.Api.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+   // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ODataRouteComponent]
     [Route("odata/[controller]")]
     [ApiExplorerSettings(IgnoreApi = false)]
