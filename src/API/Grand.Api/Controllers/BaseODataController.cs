@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.OData.Routing.Controllers;
 
 namespace Grand.Api.Controllers
 {
-   // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ODataRouteComponent]
     [Route("odata/[controller]")]
     [ApiExplorerSettings(IgnoreApi = false)]
-    //[AuthorizeApiAdmin]
-    [AllowAnonymous]
+    [AuthorizeApiAdmin]
+    //[AllowAnonymous]
     public abstract partial class BaseODataController : ODataController
     {
         public override ForbidResult Forbid()
