@@ -25,7 +25,7 @@ namespace Grand.Api.Infrastructure
                 application.UseSwagger();
                 application.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Grandnode API V1");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Tonearme API V1");
                 });
             }
         }
@@ -38,7 +38,7 @@ namespace Grand.Api.Infrastructure
                 
                 services.AddSwaggerGen(c =>
                 {
-                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Grandnode API", Version = "v1" });
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Tonearme API", Version = "v1" });
                     c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, //Name the security scheme
                         new OpenApiSecurityScheme
                         {
