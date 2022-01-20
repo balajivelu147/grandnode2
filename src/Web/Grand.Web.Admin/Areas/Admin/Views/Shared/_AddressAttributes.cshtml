@@ -52,7 +52,17 @@
                     break;
                 case AttributeControlType.TextBox:
                     {
+                        if (attribute.Name == " latitude")
+                        {
+
                         <input name="@(controlId)" type="text" class="form-control text-box single-line" id="@(controlId)" value="@(attribute.DefaultValue)" />
+                        } else if(attribute.Name == "longitude") {
+                        <input name="@(controlId)" type="text" class="form-control text-box single-line" id="@(controlId)" value="@(attribute.DefaultValue)" />
+                        }
+                        else
+                        {
+                        <input name="@(controlId)" type="text" class="form-control text-box single-line" id="@(controlId)" value="@(attribute.DefaultValue)" />
+                        }
                     }
                     break;
                 case AttributeControlType.MultilineTextbox:
