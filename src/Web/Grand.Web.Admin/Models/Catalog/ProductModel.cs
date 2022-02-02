@@ -5,8 +5,6 @@ using Grand.Infrastructure.ModelBinding;
 using Grand.Infrastructure.Models;
 using Grand.Web.Admin.Models.Discounts;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Grand.Web.Admin.Models.Catalog
@@ -518,6 +516,12 @@ namespace Grand.Web.Admin.Models.Catalog
 
             [GrandResourceDisplayName("Admin.Catalog.Products.Pictures.Fields.OverrideTitleAttribute")]
             public string TitleAttribute { get; set; }
+
+            [GrandResourceDisplayName("Admin.Catalog.Products.Pictures.Fields.Style")]
+            public string Style { get; set; }
+
+            [GrandResourceDisplayName("Admin.Catalog.Products.Pictures.Fields.ExtraField")]
+            public string ExtraField { get; set; }
 
             public IList<ProductPictureLocalizedModel> Locales { get; set; }
 

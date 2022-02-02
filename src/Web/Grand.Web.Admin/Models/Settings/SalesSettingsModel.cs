@@ -1,7 +1,6 @@
 ﻿using Grand.Infrastructure.ModelBinding;
 using Grand.Infrastructure.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
 
 namespace Grand.Web.Admin.Models.Settings
 {
@@ -76,7 +75,10 @@ namespace Grand.Web.Admin.Models.Settings
             public bool DeactivateGiftVouchersAfterCancelOrder { get; set; }
 
             [GrandResourceDisplayName("Admin.Settings.Order.DeactivateGiftVouchersAfterDeletingOrder")]
-            public bool DeactivateGiftVouchersAfterDeletingOrder { get; set; }
+            public bool DeactivateGiftVouchersAfterDeletingOrder { get; set; }           
+
+            [GrandResourceDisplayName("Admin.Settings.Order.GiftVouchers_Assign_StoreId")]
+            public bool GiftVouchers_Assign_StoreId { get; set; }
 
             [GrandResourceDisplayName("Admin.Settings.Order.CompleteOrderWhenDelivered")]
             public bool CompleteOrderWhenDelivered { get; set; }

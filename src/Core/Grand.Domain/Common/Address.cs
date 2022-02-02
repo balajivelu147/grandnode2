@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Grand.Domain.Common
+﻿namespace Grand.Domain.Common
 {
     public partial class Address : BaseEntity
     {
@@ -9,6 +6,11 @@ namespace Grand.Domain.Common
         {
             Attributes = new List<CustomAttribute>();
         }
+
+        /// <summary>
+        /// Gets or sets the name of address
+        /// </summary>
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the first name

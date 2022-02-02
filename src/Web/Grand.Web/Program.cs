@@ -1,5 +1,7 @@
-﻿using Grand.Web.Common.Startup;
+﻿using Grand.Infrastructure.Configuration;
+using Grand.Web.Common.Startup;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -30,6 +32,7 @@ builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
         if (!string.IsNullOrEmpty(appsettings) && !string.IsNullOrEmpty(param))
             config.AddJsonFile($"App_Data/{param}/appsettings.json", optional: false, reloadOnChange: true);
     }
+
 });
 
 //create logger
@@ -37,6 +40,17 @@ Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(builder.Configurat
 
 //add services
 Grand.Infrastructure.StartupBase.ConfigureServices(builder.Services, builder.Configuration);
+
+//Allow non ASCII chars in headers
+var config = new HostingConfig();
+builder.Configuration.GetSection("Application").Bind(config);
+if (config.AllowNonAsciiCharInHeaders)
+{
+    builder.WebHost.ConfigureKestrel(options =>
+    {
+        options.ResponseHeaderEncodingSelector = (_) => Encoding.UTF8;
+    });
+}
 
 //register task
 builder.Services.RegisterTasks();

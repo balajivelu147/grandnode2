@@ -4,8 +4,6 @@ using Grand.Domain.Affiliates;
 using Grand.Infrastructure;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System;
-using System.Threading.Tasks;
 
 namespace Grand.Business.Customers.Tests.Extensions
 {
@@ -85,7 +83,7 @@ namespace Grand.Business.Customers.Tests.Extensions
                 Id = id
             };
             _workContextMock.Setup(c => c.CurrentStore).Returns(new Domain.Stores.Store() { Url = _fakeStoreUrl });
-            Assert.AreEqual(string.Format(_expectedFormat, "affiliateid", id), affiliate.GenerateUrl(_workContextMock.Object));
+            Assert.AreEqual(string.Format(_expectedFormat, "affiliateid", id), affiliate.GenerateUrl("http://localhost/"));
             //_webHelperMock.Verify(c => c.ModifyQueryString(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
         }
 
@@ -97,7 +95,7 @@ namespace Grand.Business.Customers.Tests.Extensions
                 FriendlyUrlName = friendlyUrl
             };
             _workContextMock.Setup(c => c.CurrentStore).Returns(new Domain.Stores.Store() { Url = _fakeStoreUrl });
-            Assert.AreEqual(string.Format(_expectedFormat, "affiliate", friendlyUrl), affiliate.GenerateUrl(_workContextMock.Object));
+            Assert.AreEqual(string.Format(_expectedFormat, "affiliate", friendlyUrl), affiliate.GenerateUrl("http://localhost/"));
         }
 
         [TestMethod()]

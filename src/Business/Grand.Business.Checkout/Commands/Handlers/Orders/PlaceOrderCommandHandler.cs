@@ -35,12 +35,6 @@ using Grand.SharedKernel;
 using Grand.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Grand.Business.Checkout.Commands.Handlers.Orders
 {
@@ -774,10 +768,10 @@ namespace Grand.Business.Checkout.Commands.Handlers.Orders
         protected virtual async Task GenerateGiftVoucher(PlaceOrderContainter details, ShoppingCartItem sc, Order order, OrderItem orderItem, Product product)
         {
             _productAttributeParser.GetGiftVoucherAttribute(sc.Attributes,
-                        out string giftVoucherRecipientName, out string giftVoucherRecipientEmail,
-                        out string giftVoucherSenderName, out string giftVoucherSenderEmail, out string giftVoucherMessage);
+                        out var giftVoucherRecipientName, out var giftVoucherRecipientEmail,
+                        out var giftVoucherSenderName, out var giftVoucherSenderEmail, out var giftVoucherMessage);
 
-            for (int i = 0; i < sc.Quantity; i++)
+            for (var i = 0; i < sc.Quantity; i++)
             {
                 var amount = orderItem.UnitPriceInclTax;
                 if (product.OverGiftAmount.HasValue)
@@ -797,6 +791,7 @@ namespace Grand.Business.Checkout.Commands.Handlers.Orders
                     SenderEmail = giftVoucherSenderEmail,
                     Message = giftVoucherMessage,
                     IsRecipientNotified = false,
+                    StoreId = _orderSettings.GiftVouchers_Assign_StoreId ? _workContext.CurrentStore.Id : string.Empty,
                     CreatedOnUtc = DateTime.UtcNow
                 };
                 await _giftVoucherService.InsertGiftVoucher(gc);

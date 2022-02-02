@@ -32,12 +32,7 @@ using Grand.Web.Models.Media;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Grand.Business.Catalog.Interfaces.Brands;
 
 namespace Grand.Web.Features.Handlers.Products
@@ -570,6 +565,8 @@ namespace Grand.Web.Features.Handlers.Products
                 Id = defaultPicture.PictureId,
                 ImageUrl = await _pictureService.GetPictureUrl(defaultPicture.PictureId, defaultPictureSize, !isAssociatedProduct),
                 FullSizeImageUrl = await _pictureService.GetPictureUrl(defaultPicture.PictureId, 0, !isAssociatedProduct),
+                Style = picture?.Style,
+                ExtraField = picture?.ExtraField
             };
             //"title" attribute
             defaultPictureModel.Title = (picture != null && !string.IsNullOrEmpty(picture.GetTranslation(x => x.TitleAttribute, _workContext.WorkingLanguage.Id))) ?
@@ -592,6 +589,8 @@ namespace Grand.Web.Features.Handlers.Products
                         ThumbImageUrl = await _pictureService.GetPictureUrl(productPicture.PictureId, _mediaSettings.ProductThumbPictureSizeOnProductDetailsPage),
                         ImageUrl = await _pictureService.GetPictureUrl(productPicture.PictureId, _mediaSettings.ProductDetailsPictureSize),
                         FullSizeImageUrl = await _pictureService.GetPictureUrl(productPicture.PictureId),
+                        Style = picture?.Style,
+                        ExtraField = picture?.ExtraField
                     };
                     //"title" attribute
                     pictureModel.Title = !string.IsNullOrEmpty(picture.GetTranslation(x => x.TitleAttribute, _workContext.WorkingLanguage.Id)) ?
@@ -1098,7 +1097,9 @@ namespace Grand.Web.Features.Handlers.Products
                     var pictureModel = new PictureModel {
                         Id = productPicture.PictureId,
                         ImageUrl = await _pictureService.GetPictureUrl(productPicture.PictureId, _mediaSettings.ProductBundlePictureSize),
-                        FullSizeImageUrl = await _pictureService.GetPictureUrl(productPicture.PictureId)
+                        FullSizeImageUrl = await _pictureService.GetPictureUrl(productPicture.PictureId),
+                        Style = picture?.Style,
+                        ExtraField = picture?.ExtraField
                     };
                     //"title" attribute
                     pictureModel.Title = (picture != null && !string.IsNullOrEmpty(picture.TitleAttribute)) ?

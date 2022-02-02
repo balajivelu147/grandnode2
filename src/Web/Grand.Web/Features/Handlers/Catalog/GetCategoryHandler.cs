@@ -18,10 +18,6 @@ using Grand.Web.Models.Media;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Grand.Web.Features.Handlers.Catalog
 {
@@ -121,6 +117,8 @@ namespace Grand.Web.Features.Handlers.Catalog
                     Id = x.PictureId,
                     FullSizeImageUrl = await _pictureService.GetPictureUrl(x.PictureId),
                     ImageUrl = await _pictureService.GetPictureUrl(x.PictureId, _mediaSettings.CategoryThumbPictureSize),
+                    Style = picture?.Style,
+                    ExtraField = picture?.ExtraField
                 };
                 //"title" attribute
                 subCatModel.PictureModel.Title = (picture != null && !string.IsNullOrEmpty(picture.GetTranslation(x => x.TitleAttribute, request.Language.Id))) ?

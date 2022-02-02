@@ -45,9 +45,10 @@
     <Copy SourceFiles="@(ThemeViews)" DestinationFolder="$(PublishDir)/Themes/%(RecursiveDir)" SkipUnchangedFiles="true" />
     <Copy SourceFiles="@(PluginFiles)" DestinationFolder="$(PublishDir)/Plugins/%(RecursiveDir)" SkipUnchangedFiles="true" />
   </Target>
-  <!--<PropertyGroup>
-    <EnableDefaultContentItems>false</EnableDefaultContentItems>
-  </PropertyGroup>-->
+  <PropertyGroup>
+	  <TargetFramework>net6.0</TargetFramework>
+    <!--<EnableDefaultContentItems>false</EnableDefaultContentItems>-->
+  </PropertyGroup>
   <ItemGroup>
     <Content Remove="Plugins\**" />
     <Compile Remove="Plugins\**" />

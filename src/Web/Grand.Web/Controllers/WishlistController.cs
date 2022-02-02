@@ -17,10 +17,6 @@ using Grand.Web.Features.Models.ShoppingCart;
 using Grand.Web.Models.ShoppingCart;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Grand.Web.Controllers
 {
@@ -64,6 +60,28 @@ namespace Grand.Web.Controllers
         #endregion
 
         #region Wishlist
+
+
+        public async Task<IActionResult> SidebarWishlist()
+        {
+            if (!await _permissionService.Authorize(StandardPermission.EnableWishlist))
+                return Content("");
+
+            var cart = _workContext.CurrentCustomer.ShoppingCartItems.Where(sci => sci.ShoppingCartTypeId == ShoppingCartType.Wishlist);
+
+            if (!string.IsNullOrEmpty(_workContext.CurrentStore.Id))
+                cart = cart.LimitPerStore(_shoppingCartSettings.SharedCartBetweenStores, _workContext.CurrentStore.Id);
+
+            var model = await _mediator.Send(new GetMiniWishlist() {
+                Cart = cart.ToList(),
+                Customer = _workContext.CurrentCustomer,
+                Language = _workContext.WorkingLanguage,
+                Currency = _workContext.WorkingCurrency,
+                Store = _workContext.CurrentStore,
+            });
+
+            return Json(model);
+        }
 
         [HttpGet]
         public virtual async Task<IActionResult> Index(Guid? customerGuid)

@@ -10,14 +10,10 @@ using Grand.Infrastructure.Configuration;
 using Grand.Infrastructure.Plugins;
 using Grand.Infrastructure.TypeSearchers;
 using Grand.SharedKernel.Extensions;
-using Grand.Web.Common.Extensions;
-using Grand.Web.Common.Routing;
 using Grand.Web.Common.Themes;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,11 +21,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.WebEncoders;
 using Newtonsoft.Json.Serialization;
 using StackExchange.Redis;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using WebMarkupMin.AspNet.Common.Compressors;
@@ -183,11 +175,7 @@ namespace Grand.Web.Common.Infrastructure
         public static IMvcBuilder AddGrandMvc(this IServiceCollection services, IConfiguration configuration)
         {
             //add basic MVC feature
-            var mvcBuilder = services.AddMvc(options =>
-            {
-                //for API - ignore for PWA
-                options.Conventions.Add(new ApiExplorerIgnores());
-            });
+            var mvcBuilder = services.AddMvc();
 
             //add view localization
             mvcBuilder.AddViewLocalization();
@@ -251,16 +239,6 @@ namespace Grand.Web.Common.Infrastructure
                     !request.HttpContext.RequestServices.GetRequiredService<AppConfig>().DisplayMiniProfilerInPublicStore ||
                     request.HttpContext.RequestServices.GetRequiredService<IPermissionService>().Authorize(StandardPermission.AccessAdminPanel).Result;
             });
-        }
-
-        /// <summary>
-        /// Register custom RedirectResultExecutor
-        /// </summary>
-        /// <param name="services">Collection of service descriptors</param>
-        public static void AddGrandRedirectResultExecutor(this IServiceCollection services)
-        {
-            //we use custom redirect executor as a workaround to allow using non-ASCII characters in redirect URLs
-            services.AddSingleton<IActionResultExecutor<RedirectResult>, GrandRedirectResultExecutor>();
         }
 
         public static void AddSettings(this IServiceCollection services)
@@ -377,28 +355,6 @@ namespace Grand.Web.Common.Infrastructure
         public static void AddDetectionDevice(this IServiceCollection services)
         {
             services.AddDetection();
-        }
-
-
-        /// <summary>
-        /// Add Progressive Web App
-        /// </summary>
-        /// <param name="services">Collection of service descriptors</param>
-        public static void AddPWA(this IServiceCollection services, IConfiguration configuration)
-        {
-            if (!DataSettingsManager.DatabaseIsInstalled())
-                return;
-
-            var config = new AppConfig();
-            configuration.GetSection("Application").Bind(config);
-            if (config.EnableProgressiveWebApp)
-            {
-                var options = new WebEssentials.AspNetCore.Pwa.PwaOptions {
-                    Strategy = (WebEssentials.AspNetCore.Pwa.ServiceWorkerStrategy)config.ServiceWorkerStrategy,
-                    RoutesToIgnore = "/admin/*"
-                };
-                services.AddProgressiveWebApp(options);
-            }
         }
     }
 }

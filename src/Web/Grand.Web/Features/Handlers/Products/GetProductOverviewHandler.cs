@@ -17,12 +17,7 @@ using Grand.Web.Features.Models.Products;
 using Grand.Web.Models.Catalog;
 using Grand.Web.Models.Media;
 using MediatR;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
@@ -437,7 +432,9 @@ namespace Grand.Web.Features.Handlers.Products
                 {
                     Id = productpicture.PictureId,
                     ImageUrl = await _pictureService.GetPictureUrl(productpicture.PictureId, pictureSize),
-                    FullSizeImageUrl = await _pictureService.GetPictureUrl(productpicture.PictureId)
+                    FullSizeImageUrl = await _pictureService.GetPictureUrl(productpicture.PictureId),
+                    Style = picture?.Style,
+                    ExtraField = picture?.ExtraField
                 };
                 //"title" attribute
                 pictureModel.Title = (picture != null && !string.IsNullOrEmpty(picture.GetTranslation(x => x.TitleAttribute, _workContext.WorkingLanguage.Id))) ?

@@ -15,10 +15,6 @@ using Grand.Web.Admin.Extensions;
 using Grand.Web.Admin.Interfaces;
 using Grand.Web.Admin.Models.Affiliates;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Grand.Web.Admin.Services
 {
@@ -63,7 +59,9 @@ namespace Grand.Web.Admin.Services
             {
                 model.Id = affiliate.Id;
                 model.Name = affiliate.Name;
-                model.Url = affiliate.GenerateUrl(_workContext);
+
+                var host = _workContext.CurrentHost == null ? _workContext.CurrentStore.Url.TrimEnd('/') : _workContext.CurrentHost.Url.TrimEnd('/');
+                model.Url = affiliate.GenerateUrl(host);
                 if (!excludeProperties)
                 {
                     model.AdminComment = affiliate.AdminComment;

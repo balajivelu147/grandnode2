@@ -1,7 +1,5 @@
 ﻿using Grand.Business.Storage.Interfaces;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Grand.Api.Commands.Models.Catalog
 {
@@ -22,7 +20,8 @@ namespace Grand.Api.Commands.Models.Catalog
                 return false;
 
             await _pictureService.UpdatePicture(picture.Id, request.Model.PictureBinary,
-                request.Model.MimeType, request.Model.SeoFilename, request.Model.AltAttribute, request.Model.TitleAttribute);
+                request.Model.MimeType, request.Model.SeoFilename, request.Model.AltAttribute, request.Model.TitleAttribute,
+                request.Model.Style, request.Model.ExtraField);
 
             return true;
         }

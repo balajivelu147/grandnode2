@@ -18,9 +18,6 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SkiaSharp;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Grand.Web.Admin.Controllers
 {
@@ -157,7 +154,8 @@ namespace Grand.Web.Admin.Controllers
                     {
                         using var image = SKBitmap.Decode(picture.PictureBinary);
                         SKData d = SKImage.FromBitmap(image).Encode(SKEncodedImageFormat.Webp, mediaSettings.ImageQuality);
-                        await pictureService.UpdatePicture(picture.Id, d.ToArray(), "image/webp", picture.SeoFilename, picture.AltAttribute, picture.TitleAttribute, true, false);
+                        await pictureService.UpdatePicture(picture.Id, d.ToArray(), "image/webp", picture.SeoFilename, picture.AltAttribute, picture.TitleAttribute, 
+                            picture.Style, picture.ExtraField, true, false);
                         numberOfConvertItems += 1;
                     }
                     catch (Exception ex)

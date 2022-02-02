@@ -7,8 +7,6 @@ using Grand.Domain.Shipping;
 using Grand.Domain.Stores;
 using Grand.Domain.Vendors;
 using Grand.SharedKernel.Extensions;
-using System;
-using System.Collections.Generic;
 
 namespace Grand.Business.Messages.DotLiquidDrops
 {
@@ -64,6 +62,10 @@ namespace Grand.Business.Messages.DotLiquidDrops
         public string CustomerEmail
         {
             get { return _order.BillingAddress.Email; }
+        }
+
+        public string BillingAddressName {
+            get { return _order.BillingAddress.Name; }
         }
 
         public string BillingFirstName
@@ -135,6 +137,10 @@ namespace Grand.Business.Messages.DotLiquidDrops
         public string ShippingAdditionDescription
         {
             get { return _order.ShippingOptionAttributeDescription; }
+        }
+
+        public string ShippingAddressName {
+            get { return _order.ShippingAddress != null ? _order.ShippingAddress.Name : ""; }
         }
 
         public string ShippingFirstName

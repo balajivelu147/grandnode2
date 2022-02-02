@@ -9,8 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Formatter;
 using Microsoft.AspNetCore.OData.Query;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Net;
 
 namespace Grand.Api.Controllers.OData
 {
@@ -28,6 +27,9 @@ namespace Grand.Api.Controllers.OData
 
         [SwaggerOperation(summary: "Get entity from Category by key", OperationId = "GetCategoryById")]
         [HttpGet("{key}")]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Get(string key)
         {
             if (!await _permissionService.Authorize(PermissionSystemName.Categories))
@@ -43,6 +45,8 @@ namespace Grand.Api.Controllers.OData
         [SwaggerOperation(summary: "Get entities from Category", OperationId = "GetCategories")]
         [HttpGet]
         [EnableQuery(HandleNullPropagation = HandleNullPropagationOption.False)]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get()
         {
             if (!await _permissionService.Authorize(PermissionSystemName.Categories))
@@ -53,6 +57,9 @@ namespace Grand.Api.Controllers.OData
 
         [SwaggerOperation(summary: "Add new entity to Category", OperationId = "InsertCategory")]
         [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Post([FromBody] CategoryDto model)
         {
             if (!await _permissionService.Authorize(PermissionSystemName.Categories))
@@ -68,6 +75,10 @@ namespace Grand.Api.Controllers.OData
 
         [SwaggerOperation(summary: "Update entity in Category", OperationId = "UpdateCategory")]
         [HttpPut]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Put([FromBody] CategoryDto model)
         {
             if (!await _permissionService.Authorize(PermissionSystemName.Categories))
@@ -88,6 +99,10 @@ namespace Grand.Api.Controllers.OData
         }
         [SwaggerOperation(summary: "Update entity in Category (delta)", OperationId = "UpdateCategoryPatch")]
         [HttpPatch]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Patch([FromODataUri] string key, [FromBody] JsonPatchDocument<CategoryDto> model)
         {
             if (!await _permissionService.Authorize(PermissionSystemName.Categories))
@@ -110,6 +125,9 @@ namespace Grand.Api.Controllers.OData
         }
         [SwaggerOperation(summary: "Delete entity from Category", OperationId = "DeleteCategory")]
         [HttpDelete]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Delete(string key)
         {
             if (!await _permissionService.Authorize(PermissionSystemName.Categories))

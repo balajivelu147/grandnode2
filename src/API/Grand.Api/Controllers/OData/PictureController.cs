@@ -7,7 +7,7 @@ using Grand.Business.Common.Services.Security;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Threading.Tasks;
+using System.Net;
 
 namespace Grand.Api.Controllers.OData
 {
@@ -24,6 +24,9 @@ namespace Grand.Api.Controllers.OData
 
         [SwaggerOperation(summary: "Get entities from Picture by key", OperationId = "GetPictureById")]
         [HttpGet("{key}")]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Get(string key)
         {
             if (!await _permissionService.Authorize(PermissionSystemName.Pictures))
@@ -38,6 +41,9 @@ namespace Grand.Api.Controllers.OData
 
         [SwaggerOperation(summary: "Add new entity in Picture", OperationId = "InsertPicture")]
         [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Post([FromBody] PictureDto model)
         {
             if (!await _permissionService.Authorize(PermissionSystemName.Pictures))
@@ -53,6 +59,10 @@ namespace Grand.Api.Controllers.OData
 
         [SwaggerOperation(summary: "Update entity in Picture", OperationId = "UpdatePicture")]
         [HttpPut]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Put([FromBody] PictureDto model)
         {
             if (!await _permissionService.Authorize(PermissionSystemName.Categories))
@@ -74,6 +84,9 @@ namespace Grand.Api.Controllers.OData
 
         [SwaggerOperation(summary: "Delete entity in Picture", OperationId = "DeletePicture")]
         [HttpDelete]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Delete(string key)
         {
             if (!await _permissionService.Authorize(PermissionSystemName.Pictures))

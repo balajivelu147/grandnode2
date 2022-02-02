@@ -12,7 +12,6 @@ using Grand.Web.Models.Course;
 using Grand.Web.Models.Pages;
 using Grand.Web.Models.Vendors;
 using Microsoft.AspNetCore.Http;
-using System;
 using System.Globalization;
 
 namespace Grand.Web.Extensions
@@ -168,6 +167,9 @@ namespace Grand.Web.Extensions
 
             if (trimFields)
             {
+
+                if (model.Name != null)
+                    model.Name = model.Name.Trim();
                 if (model.FirstName != null)
                     model.FirstName = model.FirstName.Trim();
                 if (model.LastName != null)
@@ -191,6 +193,7 @@ namespace Grand.Web.Extensions
                 if (model.FaxNumber != null)
                     model.FaxNumber = model.FaxNumber.Trim();
             }
+            destination.Name = model.Name;
             destination.FirstName = model.FirstName;
             destination.LastName = model.LastName;
             destination.Email = model.Email;

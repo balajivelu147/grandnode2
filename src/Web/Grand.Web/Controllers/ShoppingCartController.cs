@@ -22,11 +22,6 @@ using Grand.Web.Features.Models.ShoppingCart;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Grand.Web.Controllers
 {
@@ -631,7 +626,9 @@ namespace Grand.Web.Controllers
             if (!string.IsNullOrWhiteSpace(giftvouchercouponcode))
             {
                 var giftVoucher = (await _mediator.Send(new GetGiftVoucherQuery() { Code = giftvouchercouponcode, IsGiftVoucherActivated = true })).FirstOrDefault();
-                bool isGiftVoucherValid = giftVoucher != null && giftVoucher.IsGiftVoucherValid(_workContext.WorkingCurrency);
+                var isGiftVoucherValid = giftVoucher != null 
+                    && giftVoucher.IsGiftVoucherValid(_workContext.WorkingCurrency, _workContext.CurrentStore);
+
                 if (isGiftVoucherValid)
                 {
                     var result = _workContext.CurrentCustomer.ApplyCouponCode(SystemCustomerFieldNames.GiftVoucherCoupons, giftvouchercouponcode.Trim().ToLower());

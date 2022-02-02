@@ -10,9 +10,6 @@ using Grand.Web.Events.Cache;
 using Grand.Web.Models.Catalog;
 using Grand.Web.Models.Media;
 using MediatR;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Grand.Business.Common.Extensions;
 
 namespace Grand.Web.Features.Handlers.Catalog
@@ -62,6 +59,8 @@ namespace Grand.Web.Features.Handlers.Catalog
                     Id = brand.PictureId,
                     FullSizeImageUrl = await _pictureService.GetPictureUrl(brand.PictureId),
                     ImageUrl = await _pictureService.GetPictureUrl(brand.PictureId, _mediaSettings.BrandThumbPictureSize),
+                    Style = picture?.Style,
+                    ExtraField = picture?.ExtraField
                 };
                 //"title" attribute
                 modelBrand.PictureModel.Title = (picture != null && !string.IsNullOrEmpty(picture.GetTranslation(x => x.TitleAttribute, request.Language.Id))) ?

@@ -16,10 +16,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Grand.Web.Controllers
 {
@@ -251,7 +247,7 @@ namespace Grand.Web.Controllers
                     migrationProcess.InstallApplication();
 
                     //restart application
-                    await _cacheBase.SetAsync("Installed", true, 120);
+                    await _cacheBase.GetAsync("Installed", () => Task.FromResult(true), 120);
                     return View(new InstallModel() { Installed = true });
                 }
                 catch (Exception exception)

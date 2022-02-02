@@ -1,6 +1,4 @@
 using Grand.Domain.Catalog;
-using System;
-using System.Collections.Generic;
 
 namespace Grand.Domain.Orders
 {
@@ -65,6 +63,11 @@ namespace Grand.Domain.Orders
         /// Gets or sets a value indicating whether recipient is notified
         /// </summary>
         public bool IsRecipientNotified { get; set; }
+
+        /// <summary>
+        /// Gets or sets the store identifier
+        /// </summary>
+        public string StoreId { get; set; }
 
         /// <summary>
         /// Gets or sets the date and time of instance creation

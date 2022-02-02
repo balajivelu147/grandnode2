@@ -9,8 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Formatter;
 using Microsoft.AspNetCore.OData.Query;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Net;
 
 namespace Grand.Api.Controllers.OData
 {
@@ -27,6 +26,9 @@ namespace Grand.Api.Controllers.OData
 
         [SwaggerOperation(summary: "Get entity from CustomerGroup by key", OperationId = "GetCustomerGroupById")]
         [HttpGet("{key}")]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Get(string key)
         {
             if (!await _permissionService.Authorize(PermissionSystemName.Customers))
@@ -42,6 +44,8 @@ namespace Grand.Api.Controllers.OData
         [SwaggerOperation(summary: "Get entities from CustomerGroup", OperationId = "GetCustomerGroups")]
         [HttpGet]
         [EnableQuery(HandleNullPropagation = HandleNullPropagationOption.False)]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get()
         {
             if (!await _permissionService.Authorize(PermissionSystemName.Customers))
@@ -52,6 +56,9 @@ namespace Grand.Api.Controllers.OData
 
         [SwaggerOperation(summary: "Add new entity to CustomerGroup", OperationId = "InsertCustomerGroup")]
         [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Post([FromBody] CustomerGroupDto model)
         {
             if (!await _permissionService.Authorize(PermissionSystemName.Customers))
@@ -67,6 +74,10 @@ namespace Grand.Api.Controllers.OData
 
         [SwaggerOperation(summary: "Update entity in CustomerGroup", OperationId = "UpdateCustomerGroup")]
         [HttpPut]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Put([FromBody] CustomerGroupDto model)
         {
             if (!await _permissionService.Authorize(PermissionSystemName.Customers))
@@ -88,6 +99,10 @@ namespace Grand.Api.Controllers.OData
 
         [SwaggerOperation(summary: "Partially update entity in CustomerGroup", OperationId = "PartiallyUpdateCustomerGroup")]
         [HttpPatch]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Patch([FromODataUri] string key, [FromBody] JsonPatchDocument<CustomerGroupDto> model)
         {
             if (!await _permissionService.Authorize(PermissionSystemName.Customers))
@@ -112,6 +127,9 @@ namespace Grand.Api.Controllers.OData
 
         [SwaggerOperation(summary: "Delete entity in CustomerGroup", OperationId = "DeleteCustomerGroup")]
         [HttpDelete]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Delete(string key)
         {
             if (!await _permissionService.Authorize(PermissionSystemName.Customers))
