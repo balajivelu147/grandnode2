@@ -54,7 +54,18 @@
                 $('#sidebar-menu').find('li.active-sm ul').hide();
             }
         }
-
+        debugger;
+        console.log(navigator.geolocation);
+           if (navigator.geolocation) {
+   navigator.geolocation.getCurrentPosition(function(position) {
+     var pos = {
+       lat: position.coords.latitude,
+       lng: position.coords.longitude
+     };
+   })
+           console.log(pos);
+           }
+     
     </script>
     <div class="container body">
         <div class="main_container">
