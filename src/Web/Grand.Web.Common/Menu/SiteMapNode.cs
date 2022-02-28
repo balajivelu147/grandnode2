@@ -9,7 +9,7 @@ namespace Grand.Web.Common.Menu
         public SiteMapNode()
         {
             ChildNodes = new List<SiteMapNode>();
-            PermissionNames = new List<string>();
+            PermissionNames = new List<string>();///sdfsdfdsfdsfsdfds
         }
 
         /// <summary>
